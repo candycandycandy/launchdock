@@ -1,0 +1,13 @@
+language: python
+python:
+    - "2.7"
+
+install: python -m pip install -r requirements.txt
+
+script: 
+    - PYTHONPATH=. python tests/test_filters.py
+      # - PYTHONPATH=. python tests/test_views_integration.py
+      #- PYTHONPATH=. python tests/test_views_acceptance.py
+    # add any other tests here 
+    # recommitting because it's not working
+    #
