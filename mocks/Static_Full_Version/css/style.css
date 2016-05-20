@@ -954,9 +954,6 @@ fieldset[disabled] .btn-white.active {
 .progress-bar {
   box-shadow: none;
 }
-#login-button{
-  margin-top: 50px;
-}
 .btn-outline {
   color: inherit;
   background-color: transparent;
