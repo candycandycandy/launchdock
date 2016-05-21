@@ -239,7 +239,7 @@ h5 {
 .nav-second-level li:last-child {
   margin-bottom: 10px;
 }
-body:not(.fixed-sidebar):not(.canvas-menu).mini-navbar .nav li:hover > .nav-second-level,
+body:not(.fixed-sidebar):not(.nvas-menu).mini-navbar .nav li:hover > .nav-second-level,
 .mini-navbar .nav li:focus > .nav-second-level {
   display: block;
   border-radius: 0 2px 2px 0;
@@ -955,7 +955,7 @@ fieldset[disabled] .btn-white.active {
   box-shadow: none;
 }
 #login-button{
-  margin-top: 50px;
+  margin-top: 20px;
 }
 .btn-outline {
   color: inherit;
@@ -7062,6 +7062,11 @@ body.landing-page {
   }
   .landing-page .carousel-caption h1 {
     font-size: 28px;
+  }
+  .form-group{
+    width: 100%;
+    float: right;
+
   }
   .landing-page .navbar.navbar-scroll .navbar-brand {
     margin-top: 6px;
