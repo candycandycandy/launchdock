@@ -5,7 +5,7 @@ API:
 
 Endpoint - represents an object or collection of objects
 
-Resources(Nouns) - retreived, created, or modified
+Resources(Nouns)(Model) - retreived, created, or modified
 Verbs
 1. Get - fetching single or collection of resources
 2. Post - add a new resource to collection
@@ -22,3 +22,10 @@ Cach-Control - specifies whether the response can be generated from a cache
 - boats 
 - customers
 - reservations
+- Payment information
+- first_name
+- last_name
+- phone_number
+- age
+- dates
+- 
