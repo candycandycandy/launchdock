@@ -4,10 +4,10 @@ from flask.ext.restful import (Resource, Api, reqparse, inputs,
 								url_for)
 import models
 
-
 marina_fields = {
 	'id': fields.Integer,
 	'name': fields.String,
+	'address': fields.String,
 	'for_company': fields.String,
 	'marinas': fields.List(fields.String)
 }
@@ -35,6 +35,12 @@ class MarinaList(Resource):
 			location=['form', 'json']
 		)
 		self.reqparse.add_argument(
+			'address',
+			required=True,
+			help='No marina address provided',
+			location=['form', 'json']
+		)
+		self.reqparse.add_argument(
 			'company',
 			required=True, 
 			# nullable=True
@@ -55,18 +61,49 @@ class MarinaList(Resource):
 	def post(self):
 		args = self.reqparse.parse_args()
 		marina = models.Marina.create(**args)
-		return add_company(marina)
+		return add_company(marina), 201, {'Location': url_for
+				('resources.marinas.marina', id=marina.id)}
 
 
 class Marina(Resource):
-	def get(self, id):
-		return jsonify({'name': 'Snug Harbor South', 'company': 1}) #jsonify - turns what's in the parenthesis into a json response
+	def __init__(self):
+		self.reqparse = reqparse.RequestParser()
+		self.reqparse.add_argument(
+			'name',
+			required=True,
+			help='No marina name provided',
+			location=['form', 'json']
+		)
+		self.reqparse.add_argument(
+			'company',
+			required=True, 
+			# nullable=True
+			# type = inputs.positive/float
+			# default=''
+			help='No marina company provided',
+			location=['form', 'json']
+		)
+		super().__init__()
 
+	@marshal_with(marina_fields)
+	def get(self, id):
+		return add_company(marina_or_404(id)) 
+
+	# update record
+	@marshal_with(marina_fields)
 	def put(self, id):
-		return jsonify({'name': 'Snug Harbor South', 'company': 1})
+		args = self.reqparse.parse_args() # reqprase - parses arguments for us out of request
+		query = models.Marina.update(**args).where(models.Marina.id==id)
+		query.execute()
+		#jsonify - turns what's in the parenthesis into a json response
+		return (add_marinas(models.Marina.get(models.Marina.id==id)), 200, 
+				{'Location': url_for('resources.marinas.marina', id=id)})
 
 	def delete(self, id):
-		return jsonify({'name': 'Snug Harbor South', 'company': 1})
+		query = models.Marina.delete().where(models.Marina.id==id)
+		query.execute()
+		#jsonify - turns what's in the parenthesis into a json response
+		return ('', 204, {'Location': url_for('resources.marinas.marinas')})
 
 # made the api blueprint
 marinas_api = Blueprint('resources.marinas', __name__)

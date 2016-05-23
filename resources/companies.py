@@ -45,11 +45,9 @@ class CompanyList(Resource):
 		super().__init__()
 
 	def get(self):
-		print('hey')
 		companies = [marshal(add_marinas(company), company_fields)
 					for company in models.Company.select()] # select all of the 
 		# companies from the database and put it in companies
-		print('hey 2')
 		return jsonify({'companies': companies})
 
 	@marshal_with(company_fields)
