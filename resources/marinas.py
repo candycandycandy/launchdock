@@ -2,6 +2,7 @@ from flask import jsonify, Blueprint
 from flask.ext.restful import (Resource, Api, reqparse, inputs, 
 								fields, marshal, marshal_with,
 								url_for)
+from auth import auth
 import models
 
 marina_fields = {
@@ -11,6 +12,7 @@ marina_fields = {
 	'for_company': fields.String,
 	'marinas': fields.List(fields.String)
 }
+
 
 
 def add_company(marina):
@@ -58,6 +60,7 @@ class MarinaList(Resource):
 		return jsonify({'marinas': marinas})
 
 	@marshal_with(marina_fields)
+	@auth.login_required
 	def post(self):
 		args = self.reqparse.parse_args()
 		marina = models.Marina.create(**args)
@@ -91,6 +94,7 @@ class Marina(Resource):
 
 	# update record
 	@marshal_with(marina_fields)
+	@auth.login_required
 	def put(self, id):
 		args = self.reqparse.parse_args() # reqprase - parses arguments for us out of request
 		query = models.Marina.update(**args).where(models.Marina.id==id)
@@ -99,6 +103,7 @@ class Marina(Resource):
 		return (add_marinas(models.Marina.get(models.Marina.id==id)), 200, 
 				{'Location': url_for('resources.marinas.marina', id=id)})
 
+	@auth.login_required
 	def delete(self, id):
 		query = models.Marina.delete().where(models.Marina.id==id)
 		query.execute()

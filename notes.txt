@@ -1,0 +1,22 @@
+
+Company
+
+id	name							address
+1	Northeast Boats					12 Candy Lane
+2	Moterboatin Inc.				23 Sunset Blvd.
+3	Snug Harbour Marina Inc.		44 Black Point Road
+4	Maura Boats Inc.				UoR dorm
+
+POST -> /api/v1/companies
+Body: {"name": "Maura Boats Inc.", "address": "UoR dorm"}
+
+
+GET -> /api/v1/companies
+
+SELECT	*
+FROM	Company
+
+
+GET -> /api/v1/companies/2
+
+{"name": "Moterboatin Inc.", "address": "23 Sunset Blvd."}

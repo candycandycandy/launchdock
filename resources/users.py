@@ -51,11 +51,6 @@ users_api = Blueprint('resources.users', __name__)
 
 # created api
 api = Api(users_api)
-
-# adding a resource to the api
-# adding a CompanyList
-# url is how to access it in the api
-# endpoint to name it
 api.add_resource(
 	UserList,
 	'/users',
